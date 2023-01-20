@@ -22,16 +22,18 @@ const mouseAction: {
 export async function mouseMove({ command, subcommand, rest }: ParseAction) {
   try {
     let cmd = `${command}_${subcommand}`;
-    console.log(cmd);
+    // console.log(cmd);
 
     if (cmd === "mouse_position") {
       const { x, y } = await mouse.getPosition();
 
       cmd = `${cmd} ${x},${y}`;
+      console.log("Response from server:", cmd);
     } else {
       const [x] = rest;
       const cb = mouseAction[subcommand];
       await cb(Number(x));
+      cmd = `${cmd} ${x}`;
     }
 
     return cmd;
