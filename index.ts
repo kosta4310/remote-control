@@ -6,5 +6,5 @@ console.log(`Start static http server on the ${HTTP_PORT} port!`);
 httpServer.listen(HTTP_PORT);
 
 process.on("SIGINT", () => {
-  httpServer.close();
+  console.log("Server was closed");
 });

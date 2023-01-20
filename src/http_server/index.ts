@@ -22,6 +22,11 @@ export const httpServer = http.createServer(function (req, res) {
   });
 });
 
+httpServer.on("close", () => {
+  console.log("WebSocketServer was closed");
+  webSocketServer.close();
+});
+
 const TCP_PORT = 8080;
 
 const webSocketServer = new WebSocketServer({ port: TCP_PORT });
