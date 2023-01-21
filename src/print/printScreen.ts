@@ -5,7 +5,18 @@ import { duplex } from "../http_server";
 export async function printScreen() {
   try {
     const { x, y } = await mouse.getPosition();
-    const image = await screen.grabRegion(new Region(x, y, 200, 200));
+    const boundX = await screen.width();
+    const boundY = await screen.height();
+
+    let abscissa = x - 100 > 0 ? x - 100 : 0;
+    abscissa = abscissa + 200 > boundX ? boundX - 200 : abscissa;
+
+    let ordinate = y - 100 > 0 ? y - 100 : 0;
+    ordinate = ordinate + 200 > boundY ? boundY - 200 : ordinate;
+
+    const image = await screen.grabRegion(
+      new Region(abscissa, ordinate, 200, 200)
+    );
 
     const imgRGB = await image.toRGB();
 
