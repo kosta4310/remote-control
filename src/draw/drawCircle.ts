@@ -1,5 +1,5 @@
 import { Button, mouse, Point, straightTo, screen } from "@nut-tree/nut-js";
-import { Action, ParseAction } from "../controller";
+import { ParseAction } from "../controller";
 
 export async function drawCircle(action: ParseAction): Promise<void> {
   try {

@@ -1,23 +1,8 @@
-import { Action, ParseAction } from "../controller";
-import {
-  FileType,
-  screen,
-  Region,
-  mouse,
-  imageResource,
-} from "@nut-tree/nut-js";
-import fs from "node:fs/promises";
+import { screen, Region, mouse } from "@nut-tree/nut-js";
 import jimp from "jimp";
 
 export async function printScreen() {
   try {
-    // await screen.captureRegion(
-    //   "snapshot.png",
-    //   new Region(100, 200, 10, 10),
-    //   FileType.PNG
-    // );
-    // const rs = await fs.readFile("snapshot.png", { encoding: "base64" });
-    // console.log(rs);
     const { x, y } = await mouse.getPosition();
     const image = await screen.grabRegion(new Region(x, y, 200, 200));
 

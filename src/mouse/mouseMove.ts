@@ -1,4 +1,4 @@
-import { Action, ParseAction } from "../controller";
+import { ParseAction } from "../controller";
 import {
   mouse,
   left,
@@ -22,7 +22,6 @@ const mouseAction: {
 export async function mouseMove({ command, subcommand, rest }: ParseAction) {
   try {
     let cmd = `${command}_${subcommand}`;
-    // console.log(cmd);
 
     if (cmd === "mouse_position") {
       const { x, y } = await mouse.getPosition();
