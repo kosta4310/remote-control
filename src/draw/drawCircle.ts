@@ -23,6 +23,6 @@ export async function drawCircle(action: ParseAction): Promise<void> {
     }
     await mouse.releaseButton(Button.LEFT);
   } catch (error) {
-    throw new Error("error");
+    throw new Error("error_draw_circle");
   }
 }

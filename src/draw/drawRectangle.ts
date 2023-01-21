@@ -16,6 +16,6 @@ export async function drawRectangle(action: ParseAction) {
 
     await mouse.releaseButton(Button.LEFT);
   } catch (error) {
-    throw new Error("error");
+    throw new Error("error_draw_rectangle");
   }
 }

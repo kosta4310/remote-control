@@ -3,6 +3,7 @@ import * as path from "path";
 import * as http from "http";
 import { WebSocketServer, createWebSocketStream } from "ws";
 import { controller } from "../controller";
+import internal from "stream";
 
 export const httpServer = http.createServer(function (req, res) {
   const __dirname = path.resolve(path.dirname(""));
@@ -28,8 +29,9 @@ const TCP_PORT = 8080;
 
 const webSocketServer = new WebSocketServer({ port: TCP_PORT });
 
+export let duplex: internal.Duplex;
 webSocketServer.on("connection", (socket) => {
-  const duplex = createWebSocketStream(socket, {
+  duplex = createWebSocketStream(socket, {
     decodeStrings: false,
   });
 
@@ -37,9 +39,9 @@ webSocketServer.on("connection", (socket) => {
     try {
       console.log("Command from client:", data.toString());
 
-      const res = await controller(data.toString());
+      await controller(data.toString());
 
-      duplex.write(res);
+      // duplex.write(res);
     } catch (error) {
       if (typeof error === "string") {
         console.log(error);

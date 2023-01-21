@@ -1,5 +1,6 @@
 import { screen, Region, mouse } from "@nut-tree/nut-js";
 import jimp from "jimp";
+import { duplex } from "../http_server";
 
 export async function printScreen() {
   try {
@@ -20,8 +21,8 @@ export async function printScreen() {
 
     console.log(`image buffer size: ${stringBase64.length}bytes`);
 
-    return `prnt_scrn ${stringBase64}`;
+    duplex.write(`prnt_scrn ${stringBase64}`);
   } catch (error) {
-    throw "error_print_screen";
+    throw new Error("error_print_screen");
   }
 }

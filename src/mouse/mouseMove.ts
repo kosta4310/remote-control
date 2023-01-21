@@ -8,6 +8,7 @@ import {
   MouseClass,
   Point,
 } from "@nut-tree/nut-js";
+import { duplex } from "../http_server";
 
 const mouseAction: {
   [key: string]: (px: number) => Promise<MouseClass | Point>;
@@ -35,8 +36,8 @@ export async function mouseMove({ command, subcommand, rest }: ParseAction) {
       cmd = `${cmd} ${x}`;
     }
 
-    return cmd;
+    duplex.write(cmd);
   } catch (error) {
-    throw new Error("error");
+    throw new Error("error_mouse_move_or_getposition");
   }
 }
