@@ -14,6 +14,8 @@ export async function printScreen() {
     let ordinate = y - 100 > 0 ? y - 100 : 0;
     ordinate = ordinate + 200 > boundY ? boundY - 200 : ordinate;
 
+    screen.highlight(new Region(abscissa, ordinate, 200, 200));
+
     const image = await screen.grabRegion(
       new Region(abscissa, ordinate, 200, 200)
     );
