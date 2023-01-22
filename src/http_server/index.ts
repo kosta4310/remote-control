@@ -20,11 +20,6 @@ export const httpServer = http.createServer(function (req, res) {
   });
 });
 
-httpServer.on("close", () => {
-  console.log("WebSocketServer was closed");
-  webSocketServer.close();
-});
-
 const TCP_PORT = 8080;
 
 const webSocketServer = new WebSocketServer({ port: TCP_PORT });
@@ -40,8 +35,6 @@ webSocketServer.on("connection", (socket) => {
       console.log("Command from client:", data.toString());
 
       await controller(data.toString());
-
-      // duplex.write(res);
     } catch (error) {
       if (typeof error === "string") {
         console.log(error);
@@ -58,8 +51,25 @@ webSocketServer.on("connection", (socket) => {
   });
 
   socket.on("error", (socket) => console.log(`error socket: ${socket}`));
+  socket.on("close", () => console.log("socket was closed"));
+  duplex.on("close", () => console.log("duplex was closed"));
 });
 
 webSocketServer.on("listening", () =>
-  console.log(`Tcp server listen on port ${TCP_PORT}`)
+  console.log(`Tcp server listen on port ${TCP_PORT} pid: ${process.pid}`)
 );
+
+process.on("SIGINT", () => {
+  console.log("Server was closed");
+
+  httpServer.close();
+  webSocketServer.close();
+});
+
+httpServer.on("close", () => {
+  console.log("http was closed");
+});
+
+webSocketServer.on("close", () => {
+  console.log("WebSocketServer was closed");
+});
