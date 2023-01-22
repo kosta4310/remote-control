@@ -51,8 +51,6 @@ webSocketServer.on("connection", (socket) => {
   });
 
   socket.on("error", (socket) => console.log(`error socket: ${socket}`));
-  socket.on("close", () => console.log("socket was closed"));
-  duplex.on("close", () => console.log("duplex was closed"));
 });
 
 webSocketServer.on("listening", () =>
@@ -64,12 +62,4 @@ process.on("SIGINT", () => {
 
   httpServer.close();
   webSocketServer.close();
-});
-
-httpServer.on("close", () => {
-  console.log("http was closed");
-});
-
-webSocketServer.on("close", () => {
-  console.log("WebSocketServer was closed");
 });
