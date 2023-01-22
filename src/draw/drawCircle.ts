@@ -1,5 +1,5 @@
 import { Button, mouse, Point, straightTo, screen } from "@nut-tree/nut-js";
-import { Action, ParseAction } from "../controller";
+import { ParseAction } from "../controller";
 
 export async function drawCircle(action: ParseAction): Promise<void> {
   try {
@@ -23,6 +23,6 @@ export async function drawCircle(action: ParseAction): Promise<void> {
     }
     await mouse.releaseButton(Button.LEFT);
   } catch (error) {
-    throw new Error("error");
+    throw new Error("error_draw_circle");
   }
 }
