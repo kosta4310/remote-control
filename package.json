@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Template for the WebSocket remote control task",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "npx ts-node ./index.ts",
     "start:dev": "nodemon ./index.ts",

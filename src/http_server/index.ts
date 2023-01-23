@@ -46,8 +46,9 @@ webSocketServer.on("connection", (socket) => {
     }
   });
 
-  duplex.on("end", async () => {
-    console.log("Client closed the connection");
+  duplex.on("end", () => {
+    // duplex.write("server_will_be_been_closed");
+    console.log("Socket is closed");
   });
 
   socket.on("error", (socket) => console.log(`error socket: ${socket}`));
@@ -58,8 +59,14 @@ webSocketServer.on("listening", () =>
 );
 
 process.on("SIGINT", () => {
-  console.log("Server was closed");
-
-  httpServer.close();
+  console.log("\nAll connection and sockets will closed");
+  webSocketServer.clients.forEach((socket) => {
+    socket.send("server_was_closed");
+    socket.close();
+  });
   webSocketServer.close();
+  httpServer.close(() => process.exit(0));
 });
+
+httpServer.on("close", () => console.log("Http server is closed"));
+webSocketServer.on("close", () => console.log("Tcp server is closed"));
