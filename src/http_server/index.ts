@@ -64,8 +64,9 @@ process.on("SIGINT", () => {
     socket.send("server_was_closed");
     socket.close();
   });
-  webSocketServer.close();
-  httpServer.close(() => process.exit(0));
+  webSocketServer.close(() => {
+    httpServer.close(() => process.exit(0));
+  });
 });
 
 httpServer.on("close", () => console.log("Http server is closed"));
