@@ -47,7 +47,6 @@ webSocketServer.on("connection", (socket) => {
   });
 
   duplex.on("end", () => {
-    // duplex.write("server_will_be_been_closed");
     console.log("Socket is closed");
   });
 
