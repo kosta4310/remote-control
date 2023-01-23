@@ -26,6 +26,8 @@ export async function printScreen() {
     const readFile = await fs.readFile("./screenshot.png", {
       encoding: "base64",
     });
+    console.log(`Response from server: prnt_scrn ${readFile.length}bytes`);
+
     duplex.write(`prnt_scrn ${readFile}`);
   } catch (error) {
     throw new Error("error_print_screen");
