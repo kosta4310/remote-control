@@ -1,5 +1,5 @@
-import { screen, Region, mouse } from "@nut-tree/nut-js";
-import jimp from "jimp";
+import { screen, Region, mouse, FileType } from "@nut-tree/nut-js";
+import fs from "fs/promises";
 import { duplex } from "../http_server";
 
 export async function printScreen() {
@@ -16,25 +16,17 @@ export async function printScreen() {
 
     screen.highlight(new Region(abscissa, ordinate, 200, 200));
 
-    const image = await screen.grabRegion(
-      new Region(abscissa, ordinate, 200, 200)
+    await screen.captureRegion(
+      "screenshot",
+      new Region(abscissa, ordinate, 200, 200),
+      FileType.PNG,
+      "./"
     );
 
-    const imgRGB = await image.toRGB();
-
-    const jimpImg = new jimp(imgRGB, (err) => {
-      if (err) {
-        console.log(err);
-      }
+    const readFile = await fs.readFile("./screenshot.png", {
+      encoding: "base64",
     });
-
-    const buffer = await jimpImg.getBufferAsync(jimp.MIME_PNG);
-
-    const stringBase64 = buffer.toString("base64");
-
-    console.log(`image buffer size: ${stringBase64.length}bytes`);
-
-    duplex.write(`prnt_scrn ${stringBase64}`);
+    duplex.write(`prnt_scrn ${readFile}`);
   } catch (error) {
     throw new Error("error_print_screen");
   }
